@@ -1,0 +1,91 @@
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: #20251f;
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+#map {
+  width: 100%;
+  height: 100vh;
+  min-height: 420px;
+  background: #7d8068;
+}
+
+/* Leaflet popup – etwas "kartenhafter" gestaltet */
+.temiskla-popup .leaflet-popup-content-wrapper,
+.temiskla-popup .leaflet-popup-tip {
+  background: #eee2c3;
+  color: #30291f;
+}
+
+.temiskla-popup .leaflet-popup-content-wrapper {
+  border: 1px solid #8c7650;
+  box-shadow: 0 4px 18px rgba(0,0,0,.35);
+}
+
+.temiskla-popup .leaflet-popup-content {
+  width: min(360px, calc(100vw - 70px)) !important;
+  margin: 14px 16px;
+  line-height: 1.45;
+}
+
+.place-title {
+  margin: 0 0 5px;
+  font-size: 20px;
+  line-height: 1.15;
+  color: #4a321d;
+}
+
+.place-type {
+  margin: 0 0 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: #766348;
+}
+
+.quote {
+  margin: 0 0 8px;
+  padding-left: 10px;
+  border-left: 3px solid #9c7c4c;
+  font-style: italic;
+}
+
+.author {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #66553e;
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+}
+
+.temiskla-marker {
+  width: 24px;
+  height: 24px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: #7d241d;
+  border: 2px solid #ead9ad;
+  box-shadow: 0 2px 7px rgba(0,0,0,.55);
+}
+
+.temiskla-marker::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  top: 7px;
+  left: 7px;
+  border-radius: 50%;
+  background: #ead9ad;
+}
+
+.leaflet-control-zoom a {
+  color: #3c3225;
+}
