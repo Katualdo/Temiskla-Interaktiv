@@ -231,19 +231,22 @@ image.onload = () => {
   }).addTo(map);
 
   // Die Karte startet so, dass das komplette Bild sichtbar ist.
-  map.fitBounds(bounds, { padding: [10, 10], animate: false });
+map.fitBounds(bounds, {
+  padding: [20, 20],
+  animate: false
+});
 
-  // Man darf die Karte nicht völlig verlassen.
-  map.setMaxBounds([
-    [-imageHeight * 0.08, -imageWidth * 0.08],
-    [imageHeight * 1.08, imageWidth * 1.08]
-  ]);
+const startZoom = map.getZoom();
 
-  // Ein etwas stärkeres Hineinzoomen als die Startansicht ist möglich.
-  const startZoom = map.getZoom();
-  maxZoom = startZoom + 5;
-  map.setMinZoom(startZoom - 1);
-  map.setMaxZoom(maxZoom);
+// Karte darf etwas über den Rand hinaus verschoben werden,
+// aber nicht so weit, dass sie komplett aus dem Fenster verschwindet.
+map.setMaxBounds([
+  [-imageHeight * 0.03, -imageWidth * 0.03],
+  [imageHeight * 1.03, imageWidth * 1.03]
+]);
+
+map.setMinZoom(startZoom);
+map.setMaxZoom(startZoom + 5);
 
   addPlaces();
 };
