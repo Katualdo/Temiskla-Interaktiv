@@ -232,7 +232,7 @@ image.onload = () => {
 
   // Die Karte startet so, dass das komplette Bild sichtbar ist.
 map.fitBounds(bounds, {
-  padding: [20, 20],
+  padding: [30, 30],
   animate: false
 });
 
