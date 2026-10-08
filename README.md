@@ -1,63 +1,73 @@
-# Temiskla – interaktive Leaflet-Karte
+# Temiskla – Leaflet v2
 
-Diese kleine statische Website verwendet die gelieferte Karte als Bild und Leaflet mit
-`L.CRS.Simple`. Dadurch wird die Karte wie eine zoombare Weltkarte behandelt.
+Diese Version verwendet die mitgelieferte JPG-Datei direkt als Leaflet-ImageOverlay.
 
-## Enthalten
+## Wichtiger Hinweis zur Bildgröße
 
-- `index.html` – Einstiegspunkt
-- `styles.css` – Darstellung und Popup-Design
-- `app.js` – Leaflet-Logik und die 5 Orte
-- `Karte_Temiscla_Gebiete_Staedte.jpg` – deine Originalkarte
+Die in diesem Upload tatsächlich vorliegende Datei wurde vom Laufzeitsystem mit
+**2048 × 1356 Pixeln** erkannt. Wenn deine Originaldatei tatsächlich 3956 × 2620
+Pixel hat, wurde sie beim Upload offenbar bereits verkleinert.
 
-## Die 5 Start-Orte
+Du kannst die hochauflösende Originaldatei später einfach unter demselben Dateinamen
 
-1. Drachenküste
-2. Drachenatem-Inseln
-3. Drachenmaul-Bucht
-4. Grüfte der Aasgeier
-5. Das Horntor
+`Karte_Temiscla_Gebiete_Staedte.jpg`
 
-Die Markerpositionen sind in `app.js` als Bildkoordinaten `x/y` hinterlegt. Du kannst sie
-sehr leicht verschieben:
+ersetzen. Der Leaflet-Code liest die tatsächliche Bildgröße beim Laden automatisch aus.
+
+## Koordinatenmodus
+
+Oben rechts gibt es den Schalter:
+
+`Klick auf Karte zeigt X/Y`
+
+Aktivieren und auf einen Punkt klicken. Unten rechts erscheinen die Bildkoordinaten,
+z. B.:
+
+`X: 1234  Y: 567`
+
+Der Klick kopiert die Koordinaten außerdem in die Zwischenablage.
+
+## Neuen Ort hinzufügen
+
+In `app.js` findest du ganz oben `const places = [`.
+
+Dort einen bestehenden Block kopieren. Für die Position werden normalisierte
+Koordinaten verwendet:
 
 ```js
 {
-  title: "Das Horntor",
-  x: 1098,
-  y: 1150,
-  ...
-}
+  id: "neuer-ort",
+  title: "Neuer Ort",
+  type: "Stadt",
+  rx: 1234 / 3956,
+  ry: 567 / 2620,
+  quote: "„Zitat“",
+  author: "Vigilor Soundso",
+  description: "Beschreibung des Ortes."
+},
 ```
 
-Die Originalkarte ist 2048 × 1356 Pixel groß.
+Dabei gilt:
 
-## Lokal testen
+- X = von links nach rechts
+- Y = von oben nach unten
+- `rx` und `ry` liegen zwischen 0 und 1
+- Beispiel: X 1234 bei einer 3956-Pixel-breiten Karte → `rx: 1234 / 3956`
+- Beispiel: Y 567 bei einer 2620-Pixel-hohen Karte → `ry: 567 / 2620`
 
-Einfach `index.html` im Browser öffnen. Falls dein Browser lokale Ressourcen blockiert,
-kannst du einen kleinen lokalen Webserver verwenden, z. B.:
+Dadurch bleiben die Marker korrekt, wenn du später die echte 3956 × 2620-Datei
+einsetzt.
 
-```bash
-python -m http.server 8000
-```
+## GitHub Pages aktualisieren
 
-Danach `http://localhost:8000` öffnen.
+Nach Änderungen:
 
-## Für Notion
+1. Dateien im GitHub-Repository ersetzen/hochladen.
+2. `Commit changes`.
+3. GitHub Pages baut die Seite automatisch neu.
+4. Nach kurzer Zeit die Notion-Seite neu laden.
 
-Notion kann eine lokale HTML-Datei nicht direkt als dauerhaft eingebettete Website
-hosten. Die Seite muss zuerst öffentlich über HTTPS erreichbar sein.
+## Notion
 
-Ein einfacher Weg:
-
-1. Projekt in ein GitHub-Repository laden.
-2. GitHub Pages für das Repository aktivieren.
-3. Die erzeugte `https://...`-Adresse der Website kopieren.
-4. In Notion `/embed` wählen und diese Adresse einfügen.
-
-Alternativ funktioniert auch Netlify, Vercel oder ein eigener Webserver.
-
-## Später erweitern
-
-Weitere Orte werden einfach als weiteres Objekt in `places` ergänzt. Du kannst außerdem
-später Kategorien, Filter, eigene Marker-Icons, Bilder in Popups oder eine Suche ergänzen.
+Die GitHub-Pages-Adresse bleibt gleich. Daher muss das Embed in Notion nicht
+neu angelegt werden, wenn du nur `app.js`, CSS oder die JPG-Datei aktualisierst.

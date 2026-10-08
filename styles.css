@@ -1,63 +1,109 @@
+* {
+  box-sizing: border-box;
+}
+
 html, body {
-  margin: 0;
   width: 100%;
   height: 100%;
-  background: #20251f;
+  margin: 0;
   overflow: hidden;
+  background: #1d211d;
   font-family: Georgia, "Times New Roman", serif;
 }
 
 #map {
   width: 100%;
-  height: 100vh;
-  min-height: 420px;
-  background: #7d8068;
+  height: 100%;
+  background: #707761;
 }
 
-/* Leaflet popup – etwas "kartenhafter" gestaltet */
-.temiskla-popup .leaflet-popup-content-wrapper,
-.temiskla-popup .leaflet-popup-tip {
-  background: #eee2c3;
-  color: #30291f;
+/* ---------- Marker ---------- */
+
+.temiskla-marker {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #7b211b;
+  border: 2px solid #f2dfb3;
+  box-shadow: 0 2px 7px rgba(0,0,0,.65);
+  position: relative;
 }
+
+.temiskla-marker::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  left: 6px;
+  top: 6px;
+  border-radius: 50%;
+  background: #f2dfb3;
+}
+
+/* ---------- Popup ---------- */
 
 .temiskla-popup .leaflet-popup-content-wrapper {
-  border: 1px solid #8c7650;
-  box-shadow: 0 4px 18px rgba(0,0,0,.35);
+  width: min(440px, calc(100vw - 36px));
+  max-height: min(620px, calc(100vh - 70px));
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #806a47;
+  border-radius: 4px;
+  background: #eee2c3;
+  color: #30281f;
+  box-shadow: 0 6px 24px rgba(0,0,0,.42);
 }
 
 .temiskla-popup .leaflet-popup-content {
-  width: min(360px, calc(100vw - 70px)) !important;
-  margin: 14px 16px;
-  line-height: 1.45;
+  width: auto !important;
+  max-height: min(570px, calc(100vh - 120px));
+  overflow-y: auto;
+  margin: 0;
+  padding: 18px 20px 20px;
+  line-height: 1.5;
+  scrollbar-width: thin;
+}
+
+.temiskla-popup .leaflet-popup-tip {
+  background: #eee2c3;
+}
+
+.temiskla-popup .leaflet-popup-close-button {
+  color: #5a452d !important;
+  font-size: 23px !important;
+  width: 34px !important;
+  height: 34px !important;
+  padding: 5px 7px 0 0 !important;
 }
 
 .place-title {
-  margin: 0 0 5px;
-  font-size: 20px;
+  margin: 0 30px 3px 0;
+  color: #4b321c;
+  font-size: 22px;
   line-height: 1.15;
-  color: #4a321d;
 }
 
 .place-type {
-  margin: 0 0 10px;
+  margin: 0 0 13px;
+  color: #796548;
   font-size: 11px;
-  text-transform: uppercase;
+  font-weight: bold;
   letter-spacing: .12em;
-  color: #766348;
+  text-transform: uppercase;
 }
 
 .quote {
-  margin: 0 0 8px;
-  padding-left: 10px;
-  border-left: 3px solid #9c7c4c;
+  margin: 0 0 7px;
+  padding-left: 11px;
+  border-left: 3px solid #9a7745;
   font-style: italic;
+  font-size: 14px;
 }
 
 .author {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+  color: #67543d;
   font-size: 12px;
-  color: #66553e;
 }
 
 .description {
@@ -65,27 +111,87 @@ html, body {
   font-size: 14px;
 }
 
-.temiskla-marker {
-  width: 24px;
-  height: 24px;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
-  background: #7d241d;
-  border: 2px solid #ead9ad;
-  box-shadow: 0 2px 7px rgba(0,0,0,.55);
+/* ---------- Coordinate UI ---------- */
+
+.coords-panel,
+.help-panel {
+  position: absolute;
+  z-index: 1000;
+  background: rgba(239, 226, 195, .96);
+  color: #3d3021;
+  border: 1px solid #806a47;
+  border-radius: 4px;
+  box-shadow: 0 3px 14px rgba(0,0,0,.28);
 }
 
-.temiskla-marker::after {
-  content: "";
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  top: 7px;
-  left: 7px;
-  border-radius: 50%;
-  background: #ead9ad;
+.coords-panel {
+  right: 10px;
+  bottom: 10px;
+  min-width: 190px;
+  padding: 10px 11px;
 }
+
+.coords-title {
+  margin-bottom: 3px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#coordsText {
+  min-height: 18px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+}
+
+#copyCoords {
+  margin-top: 7px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #8b7450;
+  border-radius: 3px;
+  background: #e2d2ad;
+  color: #3d3021;
+  cursor: pointer;
+}
+
+#copyCoords:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.help-panel {
+  right: 10px;
+  top: 10px;
+  padding: 9px 11px;
+  font-size: 12px;
+}
+
+.help-panel label {
+  display: block;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.coordinate-click-marker {
+  border: 2px dashed #fff3ce;
+  background: rgba(123, 33, 27, .8);
+}
+
+/* Leaflet controls */
 
 .leaflet-control-zoom a {
-  color: #3c3225;
+  color: #3d3021 !important;
+  background: #eee2c3 !important;
+}
+
+@media (max-width: 600px) {
+  .help-panel {
+    max-width: 190px;
+  }
+
+  .coords-panel {
+    bottom: 8px;
+    right: 8px;
+    min-width: 170px;
+  }
 }
